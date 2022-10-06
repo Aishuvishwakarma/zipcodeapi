@@ -24,8 +24,6 @@ export default function App() {
    setStatearry(response.data.results)
   })
   .catch((err)=>console.log(err))
-
-
   })
 
 
@@ -46,8 +44,26 @@ const onChangehandler = (e)=>{
   setstate({[e.target.name]:e.target.value})
 }
 
-const selectStateHandler = (e)=>{
+
+
+const selectStateHandler = async  (e)=>{
   setselectState(e.target.value)
+
+
+   let api = `https://app.zipcodebase.com/api/v1/code/state?apikey=94b920d0-42f1-11ed-a129-27762a68f659&state_name=mp&country=${state.country}`
+
+
+  await axios.get(api)
+  .then((response)=>{
+    console.log(response)
+    setCity(response.data.results)
+  })
+  .catch(error=>console.log(error,'error'))
+  
+}
+
+const selectCityHandler = (e)=>{
+  setCity(e.target.value)
 }
 
 let statelist =  statearry.length ?   statearry.map((v,key)=>{
@@ -61,6 +77,10 @@ let statelist =  statearry.length ?   statearry.map((v,key)=>{
 
      <select name='state' onChange={(e)=>selectStateHandler(e)}  >
       {statelist}
+     </select>
+
+     <select name='City' onChange={(e)=>selectCityHandler(e)}  >
+      {/* {statelist} */}
      </select>
 
       {/* <button  onClick={()=>getState()} >submit</button> */}
